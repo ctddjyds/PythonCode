@@ -5,14 +5,14 @@
 """
 
 ####################################################
-## 1. 原始数据类型和操作符
+### 1. 原始数据类型和操作符
 ####################################################
-from __future__ import division #Python 3.x “/”除将得到浮点数，“//”除才仍是整数
+#from __future__ import division 
 # 数字类型
 3  # => 3
-0xAF #=>175
-0 #=>8 不是10
-(1+3j)*(9+4j) #=>(-3+31j) 提供对复数的支持
+a=0xAF #=>175小写的x或者或者大写的X都可以
+b=0o10 #=>8 不是10 第二字母是o，小写的o或者大写的O都可以； Python 2.7中,可以用o10//第一是字母o/O
+a=(1+3j)*(9+4j) #=>(-3+31j) 提供对复数的支持
 
 # 简单的算数
 1 + 1  # => 2
@@ -20,13 +20,13 @@ from __future__ import division #Python 3.x “/”除将得到浮点数，“//
 10 * 2  # => 20
 35 / 5  # => 7
 2**3  #=>8
-
+#Python 3.x “/”除将得到浮点数，“//”除才仍是整数
 # 整数的除法会自动取整
-b=5 / 2  # => 2
+b=5 / 2  # => 2.5 Python 2.7中 =2
 a=1/2
-a=5//2 #整除向下取整
-5.0 // 3.0 # => 1.0 # 浮点数也可以
-5 % 2  # => 1
+a=5//2 # => 2 整除向下取整
+a=5.0 // 3.0 # => 1.0 # 浮点数也可以
+a=5 % 2  # => 1
 
 # 要做精确的除法，我们需要引入浮点数
 2.0     # 浮点数
@@ -34,6 +34,7 @@ a=5//2 #整除向下取整
 
 # 括号具有最高优先级
 (1 + 3) * 2  # => 8
+test='Spam!' * 8  #
 
 
 # 字符串通过 " 或 ' 括起来
@@ -58,16 +59,12 @@ Let's start learn Python in imooc!'''
 # r'...' --里面r 的第一个 ' 和 Let' 的 ' 匹配了
 #print r'Python is created by "Guido". Let's start learn Python in imooc!' 
 #不会报错
-print r'Python is created by "Guido".' 
+print(r'Python is created by "Guido".') 
 
 # 老式的格式化语法 %：可以用来格式化字符串，用指定的参数替代 %s，如程序需在Python2.5以下环境运行才建议使用
 "%s can learn" % 123
 # % 右侧一般使用元组来指定多个值
 "%s can be %s" % ("strings", "interpolated")
-#模板字符串
-from string import Template
-t=Template('Make $$ selling $x!')
-t.substitute(x='slurm')
 # 推荐使用方法 format 方法来格式化字符串
 "{0} can be {1}".format("strings", "formatted")
 # 可以重复参数以节省时间
@@ -76,9 +73,13 @@ t.substitute(x='slurm')
 # 也可以用变量名代替数字
 "{name} wants to eat {food}".format(name="Bob", food="lasagna")
 
+#模板字符串
+from string import Template
+t=Template('Make $$ selling $x!')
+t.substitute(x='slurm')
 #strip(rm) 删除字符串中开头、结尾处的 rm 序列的字符
 #当rm为空时，默认删除空白符（包括'\n', '\r', '\t', ' ')
-'     123\n'.strip() #=>'123'
+t='     123\n'.strip() #=>'123'
 
 
 # 布尔值也是基本的数据类型
@@ -115,7 +116,7 @@ not False  # => True
 
 #短路计算
 a = True
-print a and 'a=T' or 'a=F' #=> a=T
+print(a and 'a=T' or 'a=F') #=> a=T
 
 # None 是对象
 None  # => None
@@ -138,8 +139,8 @@ bool({}) #=> False
 ## 2. 变量和数据结构
 ####################################################
 # print输出
-print "I'm Python. Nice to meet you!"
-print 'The quick brown fox', 'jumps over', 'the lazy dog'
+#print "I'm Python. Nice to meet you!"
+print('The quick brown fox', 'jumps over', 'the lazy dog')
 print("I'm Python. Nice to meet you!") # Python 3.x的语句方式
 
 
@@ -192,7 +193,13 @@ li.index(3)
 [x * x for x in range(1, 11)]   #=>[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 [x * x for x in range(1, 11) if x % 2 == 0] #=>[4, 16, 36, 64, 100]
 [m + n for m in 'ABC' for n in '123'] #=>['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3']
-
+M = [[1, 2, 3],          # A 3X3 matrix, as nested lists
+         [4, 5, 6],          # Code can span lines if bracketed
+         [7, 8, 9]]
+G = (row for row in M)  # Create a generator of row sums
+t=next(G)
+G={sum(row) for row in M}
+G={i:sum(M[i]) for i in range(3)}
 
 # 元组类似于列表，但它是不可改变的
 tup = (1, 2, 3)
@@ -201,16 +208,16 @@ tup[0]  # => 1
 #定义单元素的tuple要多加一个逗号“,”，避免歧义
 t = (1,)
 #打印单元素tuple时，自动添加了一个“,”，为了更明确地告诉你这是一个tuple
-print t  #=>(1,)
+print(t)  #=>(1,)
 #多元素 tuple 加不加这个额外的“,”效果是一样的：
 t = (1, 2, 3,)
-print t   #=>(1, 2, 3)
+print(t)   #=>(1, 2, 3)
 #tuple可变性
 t = ('a', 'b', ['A', 'B'])
 L = t[2]
 L[0] = 'X'
 L[1] = 'Y'
-print t # =>('a', 'b', ['X', 'Y'])
+print(t) # =>('a', 'b', ['X', 'Y'])
 # 你可以将元组解包赋给多个变量
 a, b, c = (1, 2, 3)     # a 是 1，b 是 2，c 是 3
 # 如果不加括号，将会被自动视为元组
@@ -234,7 +241,7 @@ temp=li[::-1]   # => [5, 3, 2, 1]
 temp=li[3:0:-1] #=>[5, 3, 2]
 #倒序切片
 L = range(1, 101)
-print L[4::5][-10:] #[55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
+print(L[4::5][-10:]) #[55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
 tup[:2]  # => (1, 2)
 #分片赋值,不能用于不可变的序列（元组，字符串，Unicode字符串）
 #不等长序列替换
@@ -339,11 +346,11 @@ some_var = 5
 # 这是个 if 语句，在 python 中缩进是很重要的。
 # 下面的代码片段将会输出 "some var is smaller than 10"
 if some_var > 10:
-    print "some_var is totally bigger than 10."
+    print("some_var is totally bigger than 10.")
 elif some_var < 10:    # 这个 elif 语句是不必须的
-    print "some_var is smaller than 10."
+    print("some_var is smaller than 10.")
 else:           # 这个 else 也不是必须的
-    print "some_var is indeed 10."
+    print("some_var is indeed 10.")
 
 # if 语句可以作为表达式来使用
 "yahoo!" if 3 > 2 else 2  # => "yahoo!"
@@ -357,12 +364,12 @@ else:           # 这个 else 也不是必须的
 """
 for animal in ["dog", "cat", "mouse"]:
     # 你可以用 % 来格式化字符串
-    print "%s is a mammal" % animal
+    print("%s is a mammal" % animal)
 
 #多重循环
 for x in ['A', 'B', 'C']:
     for y in ['1', '2', '3']:
-        print x + y
+        print(x + y)
 
 #while break
 sum = 0
@@ -372,7 +379,7 @@ while True:
     x = x + 1
     if x > 100:
         break
-print sum
+print(sum)
 
 # 用 try/except 块来处理异常
 # Python 2.6 及以上适用:
@@ -388,7 +395,7 @@ except IndexError as e:
 
 # 用 def 来新建函数
 def add(x, y):
-    print "x is %s and y is %s" % (x, y)
+    print("x is %s and y is %s" % (x, y))
     return x + y    # 通过 return 来返回值
 
 # 调用带参数的函数
@@ -428,7 +435,7 @@ varargs(1, 2, 3)  # => (1,2,3)
 #使用* 操作符来自动把参数列表进行拆分:
 args=[3,6]
 x=list(range(*args)) # *args 将列表 args 拆分成3，6 两个参数
-print x
+print(x)
 #使用 ** 操作符自动进行参数字典的分拆:
 def parrot(voltage,state='a stiff',action='voom'):
     return voltage,state,action    
@@ -444,8 +451,8 @@ keyword_args(big="foot", loch="ness")  # => {"big": "foot", "loch": "ness"}
 
 # 可以同时将一个函数定义成两种形式
 def all_the_args(*args, **kwargs):
-    print args
-    print kwargs
+    print(args)
+    print(kwargs)
 """
 all_the_args(1, 2, a=3, b=4) prints:
     (1, 2)
@@ -505,7 +512,7 @@ enumerate(L) #=>[(0, 'Adam'), (1, 'Lisa'), (2, 'Bart'), (3, 'Paul')]
 生成的链表中不包括结束值number
 """
 for i in range(4):
-    print i
+    print(i)
 """
 输出:
     0
@@ -515,7 +522,7 @@ for i in range(4):
 """
 #指定一个数值开始的链表
 for i in range(5, 10):
-    print i
+    print(i)
 """
 输出:
     5
@@ -526,7 +533,7 @@ for i in range(5, 10):
 """
 #指定一个数值开始和步进值的链表
 for i in range(-10, -100,-30):
-    print i
+    print(i)
 """
 输出:
     -10
@@ -568,10 +575,10 @@ class Human(object):
 
 # 实例化一个类
 i = Human(name="Ian")
-print i.say("hi")     # 输出 "Ian: hi"
+print(i.say("hi"))     # 输出 "Ian: hi"
 
 j = Human("Joel")
-print j.say("hello")  # 输出 "Joel: hello"
+print(j.say("hello"))  # 输出 "Joel: hello"
 
 # 访问类的方法
 i.get_species()  # => "H. sapiens"
@@ -601,8 +608,8 @@ p1 = Person('Bob', 90)
 # 方法也是一个属性，所以，它也可以动态地添加到实例上，只是需要用 types.MethodType() 把一个函数绑定到一个属性上；
 # 并不常见，直接在class中定义要更直观
 p1.get_grade = types.MethodType(fn_get_grade, p1, Person)
-print p1.get_grade() # => A
-print isinstance(p1, Person) #=>true 判断变量的类型
+print(p1.get_grade()) # => A
+print(isinstance(p1, Person)) #=>true 判断变量的类型
 
 ####################################################
 ## 6. 模块
@@ -610,19 +617,21 @@ print isinstance(p1, Person) #=>true 判断变量的类型
 
 # 我们可以导入其他模块
 import math
-print math.sqrt(16)  # => 4
+print(math.sqrt(16))  # => 4
+import os
+print(os.getcwd())
 
 # 我们也可以从一个模块中导入特定的函数
 from math import ceil, floor,log
-print ceil(3.7)   # => 4.0
-print floor(3.7)  # => 3.0
+print(ceil(3.7))   # => 4.0
+print(floor(3.7))  # => 3.0
 
 # 从模块中导入所有的定义
 # 警告：不推荐使用
 from math import *
 
 from logging import log as logger   # logging的log现在变成了logger
-print log(10)   # 调用的是math的log
+print(log(10))   # 调用的是math的log
 logger(10, 'import from logging')   # 调用的是logging的log
 # 简写模块名
 import math as m
